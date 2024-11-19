@@ -19,3 +19,12 @@ create index domain_events_php_class_occurred_on_index
 
 create index domain_events_occurred_on_index
     on domain_events (occurred_on);
+
+create table domain_events_handled
+(
+    event_id char(36) not null,
+    handler_class varchar(191) not null,
+    handled_at timestamp default CURRENT_TIMESTAMP not null,
+    constraint domain_events_handled_event_id_handler_class_unique
+        unique (event_id, handler_class)
+);
