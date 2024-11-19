@@ -5,7 +5,8 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Jomisacu\\DomainEventsFoundations\\": "src/"
+            "Jomisacu\\DomainEventsFoundations\\": "src/",
+            "Jomisacu\\DomainEventsFoundations\\Tests\\": "tests/"
         }
     },
     "authors": [
@@ -15,5 +16,10 @@
         }
     ],
     "minimum-stability": "stable",
-    "require": {}
+    "require": {
+        "symfony/uid": "^6.4",
+        "symfony/serializer": "^6.4",
+        "symfony/property-access": "^6.4",
+        "ext-pdo": "*"
+    }
 }
