@@ -8,5 +8,7 @@ interface DomainEventInterface
 {
     public static function getType(): string;
 
+    public function getId(): string;
+
     public function getAggregateId(): string;
 }

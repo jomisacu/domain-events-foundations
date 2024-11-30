@@ -21,6 +21,11 @@ abstract class DomainEvent implements DomainEventInterface
         $this->type = self::getType();
     }
 
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
     public static function getType(): string
     {
         return sprintf(
