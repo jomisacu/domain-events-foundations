@@ -74,7 +74,7 @@ final class DomainEventRepositoryMySql implements DomainEventRepositoryInterface
         return $events;
     }
 
-    public function findByType(string $eventType, DateTimeInterface $dateFrom, DateTimeInterface $dateTo): array
+    public function findByType(string $eventType, DateTimeInterface $from, DateTimeInterface $to): array
     {
         $statement = $this->pdo->prepare('
             SELECT * 
@@ -84,8 +84,28 @@ final class DomainEventRepositoryMySql implements DomainEventRepositoryInterface
         ');
         $params = [
             'type' => $eventType,
-            'date_from' => $dateFrom->format('Y-m-d H:i:s'),
-            'date_to' => $dateTo->format('Y-m-d H:i:s'),
+            'date_from' => $from->format('Y-m-d H:i:s'),
+            'date_to' => $to->format('Y-m-d H:i:s'),
+        ];
+        $statement->execute($params);
+
+        $events = [];
+        foreach ($statement->fetchAll(PDO::FETCH_ASSOC) as $row) {
+            $events[] = $this->parseRow($row);
+        }
+
+        return $events;
+    }
+
+    public function getDomainEventsSince(DateTimeInterface $from): array
+    {
+        $statement = $this->pdo->prepare('
+            SELECT * 
+            FROM domain_events 
+            WHERE occurred_on >= :date_from
+        ');
+        $params = [
+            'date_from' => $from->format('Y-m-d H:i:s'),
         ];
         $statement->execute($params);
 

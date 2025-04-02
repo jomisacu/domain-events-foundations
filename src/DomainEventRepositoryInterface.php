@@ -18,5 +18,13 @@ interface DomainEventRepositoryInterface
         DateTimeInterface $dateTo
     ): array;
 
-    public function findByType(string $eventType, DateTimeInterface $dateFrom, DateTimeInterface $dateTo): array;
+    /**
+     * @return array<DomainEventInterface>
+     */
+    public function findByType(string $eventType, DateTimeInterface $from, DateTimeInterface $to): array;
+
+    /**
+     * @return array<DomainEventInterface>
+     */
+    public function getDomainEventsSince(\DateTimeInterface $from): array;
 }
