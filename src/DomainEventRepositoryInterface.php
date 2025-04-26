@@ -27,4 +27,11 @@ interface DomainEventRepositoryInterface
      * @return array<DomainEventInterface>
      */
     public function getDomainEventsSince(\DateTimeInterface $from): array;
+
+    public function findUnpublished(int $limit): array;
+
+    /**
+     * @param string[] $eventIds
+     */
+    public function markAsPublished(array $eventIds): void;
 }

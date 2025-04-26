@@ -116,4 +116,34 @@ final class DomainEventRepositoryMySql implements DomainEventRepositoryInterface
 
         return $events;
     }
+
+    public function findUnpublished(int $limit): array
+    {
+        $statement = $this->pdo->prepare('
+            SELECT * 
+            FROM domain_events 
+            WHERE published = 0 
+            ORDER BY occurred_on
+            LIMIT :limit
+        ');
+        $params = [
+            'limit' => $limit,
+        ];
+        $statement->bindParam(':limit', $params['limit'], PDO::PARAM_INT);
+        $statement->execute($params);
+
+        $events = [];
+        foreach ($statement->fetchAll(PDO::FETCH_ASSOC) as $row) {
+            $events[] = $this->parseRow($row);
+        }
+
+        return $events;
+    }
+
+    public function markAsPublished(array $eventIds): void
+    {
+        $placeholders = implode(',', array_fill(0, count($eventIds), '?'));
+        $statement = $this->pdo->prepare("UPDATE domain_events SET published = 1 WHERE id IN ($placeholders)");
+        $statement->execute($eventIds);
+    }
 }

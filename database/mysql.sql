@@ -10,7 +10,7 @@ create table domain_events
 );
 
 create index domain_events_published_index
-    on domain_events (published, occurred_on);
+    on domain_events (published, occurred_on asc);
 
 create index domain_events_aggregate_id_index
     on domain_events (aggregate_id);
