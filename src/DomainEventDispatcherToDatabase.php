@@ -8,12 +8,12 @@ use Jomisacu\DomainEventsFoundations\DomainEventDispatcherInterface;
 
 final class DomainEventDispatcherToDatabase implements DomainEventDispatcherInterface
 {
-    public function __construct(private readonly StoreDomainEventOnDomainEvent $storeDomainEventOnDomainEvent)
+    public function __construct(private readonly DomainEventRepositoryInterface $domainEventRepository)
     {
     }
 
     public function dispatch(DomainEventInterface $domainEvent): void
     {
-        $this->storeDomainEventOnDomainEvent->__invoke($domainEvent);
+        $this->domainEventRepository->save($domainEvent);
     }
 }
