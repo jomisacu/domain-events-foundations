@@ -2,11 +2,15 @@ create table domain_events
 (
     id char(36) not null primary key,
     aggregate_id varchar(191) not null,
+    published boolean not null default false,
     type varchar(191) not null,
     php_class varchar(191) not null,
     payload longtext not null,
     occurred_on datetime not null
 );
+
+create index domain_events_published_index
+    on domain_events (published, occurred_on);
 
 create index domain_events_aggregate_id_index
     on domain_events (aggregate_id);
