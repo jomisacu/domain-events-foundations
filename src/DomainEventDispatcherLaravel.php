@@ -5,9 +5,6 @@ declare(strict_types=1);
 namespace Jomisacu\DomainEventsFoundations;
 
 /**
- * DomainEventDispatcherLaravel is a concrete implementation of the DomainEventDispatcherInterface
- * that uses Laravel's event system to dispatch domain events.
- *
  * This class allows you to dispatch domain events using Laravel's event system
  * and store them in a repository.
  *
