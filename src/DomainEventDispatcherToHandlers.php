@@ -19,7 +19,7 @@ final class DomainEventDispatcherToHandlers implements DomainEventDispatcherInte
             } elseif (method_exists($handler, 'handle')) {
                 $handler->handle($domainEvent);
             } else {
-                throw new DomainEventHandlerWithoutEventParameterException();
+                throw new DomainEventHandlerWithoutHandlerMethodException();
             }
         }
     }
