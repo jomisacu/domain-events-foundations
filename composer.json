@@ -17,9 +17,9 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "symfony/uid": "^6.4",
-        "symfony/serializer": "^6.4",
-        "symfony/property-access": "^6.4",
+        "symfony/uid": "^6.4|^7.0",
+        "symfony/serializer": "^6.4|^7.0",
+        "symfony/property-access": "^6.4|^7.0",
         "ext-pdo": "*"
     }
 }
