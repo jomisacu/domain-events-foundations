@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Jomisacu\DomainEventsFoundations;
 
-use Illuminate\Queue\Jobs\Job;
-
 /**
  * This class allows you to dispatch domain events using Laravel's event system using a scheduled job
  * and store them in a repository.
@@ -42,9 +40,8 @@ final class DomainEventDispatcherLaravelAsync implements DomainEventDispatcherIn
     private function dispatchWhenCommandIsFinished(DomainEventInterface $domainEvent): void
     {
         \Event::listen(\Illuminate\Console\Events\CommandFinished::class, function () use ($domainEvent) {
-            \Schedule::job(function (Job $job) use ($domainEvent) {
+            dispatch(function () use ($domainEvent) {
                 \Event::dispatch($domainEvent);
-                $job->delete();
             });
         });
     }
@@ -52,9 +49,8 @@ final class DomainEventDispatcherLaravelAsync implements DomainEventDispatcherIn
     private function dispatchWhenRequestIsFinished(DomainEventInterface $domainEvent): void
     {
         \App::terminating(function () use ($domainEvent) {
-            \Schedule::job(function (Job $job) use ($domainEvent) {
+            dispatch(function () use ($domainEvent) {
                 \Event::dispatch($domainEvent);
-                $job->delete();
             });
         });
     }
